@@ -73,19 +73,18 @@ p{margin:0}
 .band{padding-block:clamp(48px,7vw,104px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
 .wrap{max-width:1180px;margin:0 auto}
 nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between;padding:14px max(5vw,16px)}
-nav b{font-size:17px;font-weight:700}
-nav .right{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px}
-nav .links{display:flex;flex-wrap:wrap;gap:4px 22px}
-nav .links a{text-decoration:none;color:var(--soft);padding:6px 0;font-size:15px}
+nav .wrap{display:flex;flex-wrap:nowrap;gap:24px;align-items:center;justify-content:space-between;padding:12px max(5vw,16px)}
+nav b{font-size:17px;font-weight:700;white-space:nowrap;flex-shrink:0}
+nav .right{display:flex;align-items:center;gap:24px;flex-shrink:0}
+nav .links{display:flex;align-items:center;gap:22px}
+nav .links a{text-decoration:none;color:var(--soft);padding:6px 0;font-size:15px;white-space:nowrap;flex-shrink:0}
 nav .links a:hover{color:var(--ink)}
-nav b{white-space:nowrap}
-nav .right{margin-left:auto;justify-content:flex-end}
-nav .links{justify-content:flex-end}
-nav .links a{white-space:nowrap}
-:lang(hy) nav .links,:lang(ru) nav .links{gap:4px 16px}
+:lang(hy) nav .links,:lang(ru) nav .links{gap:16px}
 :lang(hy) nav .links a,:lang(ru) nav .links a{font-size:14px}
-:lang(hy) nav .right,:lang(ru) nav .right{gap:8px 18px}
+:lang(hy) nav .right,:lang(ru) nav .right{gap:18px}
+@media(max-width:600px){nav .wrap{gap:10px}nav .right{gap:8px}}
+@media(max-width:380px){nav b{font-size:14px}nav .wrap{padding-inline:14px}nav .lang button{min-width:30px;padding:0 6px}}
+nav [hidden]{display:none!important}
 .lang{display:flex;gap:2px}
 .lang button{font:inherit;font-size:13px;font-weight:600;min-width:40px;min-height:34px;border:0;border-radius:8px;background:transparent;color:var(--soft);cursor:pointer}
 .lang button[aria-pressed=true]{color:var(--acc);background:var(--accbg)}
@@ -342,7 +341,7 @@ footer{color:var(--soft);font-size:14px;border-top:1px solid var(--line)}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
 @media(max-width:980px){.grid4,.design,.reels{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){.feat{grid-template-columns:minmax(0,240px) minmax(0,1fr)}.cases,.about .wrap,.contact .wrap,.sec-head,.hero .split{grid-template-columns:minmax(0,1fr)}.visual{min-height:min(115vw,560px)}.hero .txt{padding-bottom:36px}}
-@media(max-width:600px){.loc .ig{margin-left:0}.loc .ig::before{display:none}.loc .ig::after{left:21px}.feat{grid-template-columns:minmax(0,1fr)}.feat .poster{max-width:260px}nav .links{display:none}.grid4{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:minmax(0,1fr)}.clist a{font-size:15px}.script{margin-left:.15em}}
+@media(max-width:600px){.loc .ig{margin-left:0}.loc .ig::before{display:none}.loc .ig::after{left:21px}.feat{grid-template-columns:minmax(0,1fr)}.feat .poster{max-width:260px}.grid4{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:minmax(0,1fr)}.clist a{font-size:15px}.script{margin-left:.15em}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rc .cover img,.rc video,.feat .poster img,.hov,.hov span{transition:none}.rc:hover .cover img,.feat .poster:hover img{transform:none}}
 
 @media(max-width:600px){
@@ -369,14 +368,14 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 2
   <div class="wrap">
     <b data-k="name">Anzhelika Davidyan</b>
     <div class="right">
-      <div class="links">
-        <a href="#offer" data-k="n1">Services</a>
-        <a href="#reels" data-k="n6">Reels</a>
-        <a href="#photos" data-k="n8">Photos</a>
-        <a href="#work" data-k="n2">Work</a>
-        <a href="#design" data-k="n3">Design</a>
-        <a href="#about" data-k="n4">About</a>
-        <a href="#contact" data-k="n5">Contact</a>
+      <div class="links" id="nav-links">
+        <a href="#offer" data-k="n1" data-p="2">Services</a>
+        <a href="#reels" data-k="n6" data-p="3">Reels</a>
+        <a href="#photos" data-k="n8" data-p="4">Photos</a>
+        <a href="#work" data-k="n2" data-p="5">Work</a>
+        <a href="#design" data-k="n3" data-p="6">Design</a>
+        <a href="#about" data-k="n4" data-p="7">About</a>
+        <a href="#contact" data-k="n5" data-p="1">Contact</a>
       </div>
       <div class="lang" role="group" aria-label="Language">
         <button id="l-en" data-l="en" aria-pressed="true">EN</button>
@@ -664,6 +663,25 @@ document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',
 render(lang);
 {const el=$('rect'),t0=Date.now(),p=n=>String(n).padStart(2,'0');const tick=()=>{const x=Math.floor((Date.now()-t0)/1000),h=Math.floor(x/3600),m=Math.floor(x/60)%60,sec=x%60;el.textContent=(h?h+':'+p(m):p(m))+':'+p(sec)};tick();setInterval(tick,1000)}
 {const sec=$('reels');let off;sec.addEventListener('pointerover',e=>{const c=e.target.closest('[data-tint]');if(!c||!sec.contains(c))return;clearTimeout(off);const r=c.getBoundingClientRect(),R=sec.getBoundingClientRect();sec.style.setProperty('--tint',c.dataset.tint);sec.style.setProperty('--gx',((r.left+r.width/2-R.left)/R.width*100).toFixed(1)+'%');sec.style.setProperty('--gy',((r.top+r.height/2-R.top)/R.height*100).toFixed(1)+'%');sec.classList.add('lit')});sec.addEventListener('pointerout',e=>{const c=e.target.closest('[data-tint]');if(!c||(e.relatedTarget&&c.contains(e.relatedTarget)))return;off=setTimeout(()=>sec.classList.remove('lit'),60)});sec.addEventListener('focusin',e=>{const c=e.target.closest('[data-tint]');if(c){sec.style.setProperty('--tint',c.dataset.tint);sec.classList.add('lit')}});sec.addEventListener('focusout',()=>sec.classList.remove('lit'))}
+}
+</script>
+<script>
+{
+ // Keep the nav on one line: hide lower-priority links (highest data-p first) until it fits
+ const wrap=document.querySelector('nav .wrap');
+ const items=[...document.querySelectorAll('#nav-links a')].sort((x,y)=>y.dataset.p-x.dataset.p);
+ const fit=()=>{
+  const box=document.getElementById('nav-links');
+  box.hidden=false;items.forEach(a=>a.hidden=false);
+  for(const a of items){if(wrap.scrollWidth<=wrap.clientWidth)break;a.hidden=true}
+  box.hidden=items.every(a=>a.hidden);
+ };
+ let raf,lastW=innerWidth;
+ const refit=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)};
+ addEventListener('resize',()=>{if(innerWidth!==lastW){lastW=innerWidth;refit()}});
+ document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',refit));
+ if(document.fonts)document.fonts.ready.then(refit);
+ fit();
 }
 </script>
 </body>
