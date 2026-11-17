@@ -57,6 +57,13 @@ nav .right{display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px}
 nav .links{display:flex;flex-wrap:wrap;gap:4px 22px}
 nav .links a{text-decoration:none;color:var(--soft);padding:6px 0;font-size:15px}
 nav .links a:hover{color:var(--ink)}
+nav b{white-space:nowrap}
+nav .right{margin-left:auto;justify-content:flex-end}
+nav .links{justify-content:flex-end}
+nav .links a{white-space:nowrap}
+:lang(hy) nav .links,:lang(ru) nav .links{gap:4px 16px}
+:lang(hy) nav .links a,:lang(ru) nav .links a{font-size:14px}
+:lang(hy) nav .right,:lang(ru) nav .right{gap:8px 18px}
 .lang{display:flex;gap:2px}
 .lang button{font:inherit;font-size:13px;font-weight:600;min-width:40px;min-height:34px;border:0;border-radius:8px;background:transparent;color:var(--soft);cursor:pointer}
 .lang button[aria-pressed=true]{color:var(--acc);background:var(--accbg)}
